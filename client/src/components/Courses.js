@@ -8,13 +8,11 @@ state = {
 }
 
 componentDidMount() {
-    fetch('http://localhost:5000/api/courses')
-        .then( response => response.json() )
-        .then(json => { this.setState({
-            courses: json });
-            }
-        )
-            
+    const { context } = this.props;
+    context.data.getCourses()
+        .then(data => this.setState({
+            courses: data
+        }));
 }
 
     render() {

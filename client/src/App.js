@@ -1,10 +1,14 @@
 import React, { Component } from 'react';
-import axios from 'axios';
 import { BrowserRouter, Route, Switch } from 'react-router-dom';
+import withContext from './Context';
 
 import Header from './components/Header';
 import Courses  from './components/Courses';
 import CourseDetail from './components/CourseDetail';
+import UserSignUp from './components/UserSignUp';
+
+const CoursesWithContext = withContext(Courses);
+const UserSignUpWithContext = withContext(UserSignUp);
 
 class App extends Component {
   constructor() {
@@ -15,18 +19,6 @@ class App extends Component {
     }
   }
 
-componentDidMount() {
-  axios.get('http://localhost:5000/api/courses')
-    .then(response => {
-      this.setState( {
-        courses: response.data,
-        loaded: true
-      } )
-    })
-    .catch(error => {
-      console.log('Error fetching and parsing data', error);
-    });;
-}
 
   render() {
     return (
@@ -34,7 +26,8 @@ componentDidMount() {
           <div className="container">
             <Header />
             <Switch>
-              <Route exact path="/" component = {Courses} />
+              <Route exact path="/" component = {CoursesWithContext} />
+              <Route path="/signup" component = {UserSignUpWithContext} />
               <Route path="/courses/:id" component = {CourseDetail} />
             </Switch>
           </div>
