@@ -1,7 +1,7 @@
 import React from 'react';
 
 const Form = (props) => {
-    const { elements, cancel, submit, errors } = props;
+    const { elements, cancel, submit, errors, buttonText } = props;
 
     function handleSubmit(event) {
         event.preventDefault();
@@ -19,7 +19,7 @@ const Form = (props) => {
             <form onSubmit={handleSubmit}>
                 {elements()}
                 <div className="grid-100 pad-bottom">
-                    <button className="button" type="submit"> Sign Up </button>
+                    <button className="button" type="submit" onClick={handleSubmit}> {buttonText} </button>
                     <button className="button button-secondary" onClick = { handleCancel } > Cancel </button>
                 </div>
             </form>

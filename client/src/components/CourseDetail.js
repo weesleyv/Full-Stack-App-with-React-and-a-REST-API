@@ -5,31 +5,33 @@ import Markdown from 'react-markdown';
 class CourseDetail extends Component {
 
     state = {
-        course: [],
-        user: []
+        course: []
     }
 
     componentDidMount() {
         fetch(`http://localhost:5000/api/courses/${this.props.match.params.id}`)
             .then(response => response.json())
-            .then(data => this.setState( { 
-                course: data,
-                user: data.User} ))
+            .then(data => this.setState( {course: data} ))
+            .catch( error => {
+                console.log(error);
+                this.props.history.push('/error')
+            })
     }
 
     render() {
-        const { course, user } = this.state;
-        console.log(course);
+        const { course } = this.state;
+        const userName = course.User ? `${course.User.firstName} ${course.User.lastName}` : null;
+        
         return(
             <div>
                 <div className="actions--bar">
                     <div className="bounds">
                         <div className="grid-100">
                             <span>
-                                <Link className="button" to={''}>Update Course</Link>
-                                <Link className="button" href="#">Delete Course</Link>
+                                <Link className="button" to={`/courses/${course.id}/update`}>Update Course</Link>
+                                <button className="button" onClick={this.handleDelete}>Delete Course</button>
                             </span>
-                            <Link className="button button-secondary" >Return to List</Link>
+                            <Link className="button button-secondary" to='/'>Return to List</Link>
                         </div>
                     </div>
                 </div>
@@ -38,7 +40,7 @@ class CourseDetail extends Component {
                         <div className="course--header">
                         <h4 className="course--label">Course</h4>
                         <h3 className="course--title"> { course.title } </h3>
-                        <p>By: { user.firstName } { user.lastName } </p>
+                        <p>By: {userName} </p>
                         </div>
                         <div className="course--description">
                             <Markdown source={ course.description } />
@@ -61,6 +63,23 @@ class CourseDetail extends Component {
                 </div>
             </div>
         )
+    }
+
+    handleDelete = () => {
+        if (window.confirm('Delete this course?')) {
+            const { id } = this.props.match.params;
+            const { context } = this.props;
+            const { emailAddress } = context.authenticatedUser;
+            const { password } = context.authenticatedUser;
+
+            context.data.deleteCourse( id, emailAddress, password )
+                .then(() => this.props.history.push('/'))
+                .catch( error => {
+                    console.log('Delete course error', error);
+                    this.props.history.push('/error')
+                })
+
+        }
     }
 }
 

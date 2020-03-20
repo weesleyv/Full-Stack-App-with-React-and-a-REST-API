@@ -1,4 +1,5 @@
 import React , { Component } from 'react';
+import { Link } from 'react-router-dom';
 import Form from './Form';
 
 class UserSignUp extends Component {
@@ -23,6 +24,7 @@ class UserSignUp extends Component {
                         submit = {this.submit}
                         cancel = {this.cancel}
                         errors = {errors}
+                        buttonText = "Sign Up"
                         elements = {() => (
                             <React.Fragment>
                                 <input 
@@ -48,7 +50,7 @@ class UserSignUp extends Component {
                                      type = "text"
                                      value = {emailAddress}
                                      onChange = {this.change}
-                                     placeholder = "email address"
+                                     placeholder = "Email address"
                                  />
                                  <input 
                                      id = "password"
@@ -72,7 +74,7 @@ class UserSignUp extends Component {
                        
                     </div>
                     <p>&nbsp;</p>
-                    <p>Already have a user account? <a href="sign-in.html">Click here</a> to sign in!</p>
+                    <p>Already have a user account? <Link to="/signin">Click here</Link> to sign in!</p>
                 </div>
             </div>
         )
@@ -88,34 +90,40 @@ class UserSignUp extends Component {
             }
         } );
     }
-   //submit ne rabotaet
+
     submit = () => {
-        console.log('submited');
         const { context } = this.props;
-        const { firstName, lastName, emailAddress, password } = this.state;
+        const { firstName, lastName, emailAddress, password, confirmPassword } = this.state;
+
         const user = {
             firstName,
             lastName,
             emailAddress,
             password
+        };
+        
+        if (password === confirmPassword) {
+
+            context.data.createUser(user)
+                .then( errors => {
+                    if (errors.length) {
+                        this.setState({
+                            errors
+                        })
+                    } else {
+                        context.actions.signIn(emailAddress, password)
+                            .then( () => this.props.history.push('/'));
+                        console.log( `${emailAddress} is successfully signed up and authenticated!`)
+                    }
+                })
+                .catch(error => {
+                    console.log(error);
+                })
+        } else {
+            this.setState( {
+                errors: 'Passwords do not match'
+            })
         }
-    
-        context.data.createUser(user)
-            .then( errors => {
-                if (errors.length) {
-                    this.setState({
-                        errors
-                    })
-                } else {
-                    context.actions.signIn(emailAddress, password)
-                        .then( () => this.props.history.push('/path'));
-                    console.log( `${emailAddress} is successfully signed up and authenticated!`)
-                }
-            })
-            .catch(error => {
-                console.log(error);
-                this.props.history.push('/error');
-            })
     }
 
     cancel = () => {

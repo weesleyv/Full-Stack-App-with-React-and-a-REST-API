@@ -33,9 +33,13 @@ module.exports = (sequelize, DataTypes) => {
         type: DataTypes.STRING,
         allowNull: false,
         validate: {
-          isEmail: true,
-          notEmpty: true,
-          async isUnique(email, next) {
+          isEmail: {
+            msg: "Must be valid email address format"
+          },
+          notEmpty: {
+            msg: "Email is required"
+          },
+          async isUnique(email) {
             try {
               const user = await User.findOne({
                 where: {
@@ -46,7 +50,7 @@ module.exports = (sequelize, DataTypes) => {
                 throw new Error("email already registered");
               }
             } catch (error) {
-              next(error);
+              throw error;
             }
           }
         }
