@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { BrowserRouter, Route, Switch } from 'react-router-dom';
 import withContext from './Context';
 
+//components
 import Header from './components/Header';
 import Courses  from './components/Courses';
 import CourseDetail from './components/CourseDetail';
@@ -15,6 +16,7 @@ import Forbidden from './components/Forbidden';
 import PrivateRoute from './PrivateRoute';
 import NotFound from './components/NotFound';
 
+//components with context
 const UserSignUpWithContext = withContext(UserSignUp);
 const UserSignInWithContext = withContext(UserSignIn);
 const HeaderWithContext = withContext(Header);

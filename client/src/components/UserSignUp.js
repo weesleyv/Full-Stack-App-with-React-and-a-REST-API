@@ -2,6 +2,8 @@ import React , { Component } from 'react';
 import { Link } from 'react-router-dom';
 import Form from './Form';
 
+//This component provides the "Sign Up" screen by rendering a form that allows a user to sign up
+// by creating a new account. 
 class UserSignUp extends Component {
 
     state = {
@@ -91,6 +93,7 @@ class UserSignUp extends Component {
         } );
     }
 
+    //register and sign in user
     submit = () => {
         const { context } = this.props;
         const { firstName, lastName, emailAddress, password, confirmPassword } = this.state;
@@ -103,7 +106,7 @@ class UserSignUp extends Component {
         };
         
         if (password === confirmPassword) {
-
+            //sends a POST request to the REST API's /api/users route and signs in the user. 
             context.data.createUser(user)
                 .then( errors => {
                     if (errors.length) {
@@ -126,6 +129,7 @@ class UserSignUp extends Component {
         }
     }
 
+    //returns the user to the default route
     cancel = () => {
         this.props.history.push('/')
     }

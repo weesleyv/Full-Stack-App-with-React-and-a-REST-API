@@ -18,16 +18,16 @@ module.exports = {
   authenticateUser: async (req, res, next) => {
     let message = null;
     try {
-      const credetials = auth(req);
-      if (credetials) {
+      const credentials = auth(req);
+      if (credentials) {
         const user = await User.findOne({
           where: {
-            emailAddress: credetials.name
+            emailAddress: credentials.name
           }
         });
         if (user) {
           const authenticated = bcryptjs.compareSync(
-            credetials.pass,
+            credentials.pass,
             user.password
           );
           if (authenticated) {
@@ -49,7 +49,7 @@ module.exports = {
         next();
       }
     } catch (error) {
-      console.log(error.message);
+      console.log('functions line 52:', error.message);
     }
   }
 };

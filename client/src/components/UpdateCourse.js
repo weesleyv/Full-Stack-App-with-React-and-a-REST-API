@@ -1,6 +1,8 @@
 import React , { Component} from 'react';
 import Form from './Form';
 
+//This component provides the "Update Course" screen by rendering a form 
+//that allows a user to update one of their existing courses.
 class UpdateCourse extends Component {
 
     state = {
@@ -14,20 +16,27 @@ class UpdateCourse extends Component {
     }
 
     componentDidMount() {
+        const { context } = this.props;
+        const authenticatedUser = context.authenticatedUser;
+
         fetch(`http://localhost:5000/api/courses/${this.props.match.params.id}`)
             .then(response => response.json())
             .then(course => {
                 if (course.message) {
                     this.props.history.push('/notfound')
                 } else {
-                    this.setState({
-                        id: course.id,
-                        title: course.title,
-                        description: course.description,
-                        estimatedTime: course.estimatedTime,
-                        materialsNeeded: course.materialsNeeded,
-                        userId: course.userId
-                    })
+                    if (authenticatedUser.id === course.userId) {
+                        this.setState({
+                            id: course.id,
+                            title: course.title,
+                            description: course.description,
+                            estimatedTime: course.estimatedTime,
+                            materialsNeeded: course.materialsNeeded,
+                            userId: course.userId
+                        })
+                    } else {
+                        this.props.history.push('/forbidden')
+                    }
                 }
             })
 
@@ -143,6 +152,7 @@ class UpdateCourse extends Component {
         const emailAddress = context.authenticatedUser.emailAddress;
         const password = context.authenticatedUser.password;
 
+        //sends a PUT request to the REST API's /api/courses/:id route. 
         context.data.updateCourse(updatedCourse, emailAddress, password)
             .then( errors => {
                 if (errors.length) {
@@ -157,6 +167,8 @@ class UpdateCourse extends Component {
                 this.props.history.push('/error');
             })
     }
+
+    //renders a "Cancel" button that returns the user to the "Course Detail" screen
     cancel = () => {
         this.props.history.push(`/courses/${this.props.match.params.id}`)
     }

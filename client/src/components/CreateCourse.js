@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
 import Form from './Form';
 
+//This component provides the "Create Course" screen by rendering a form
+// that allows a user to create a new course.
 class CreateCourse extends Component {
 
     state = {
@@ -99,6 +101,7 @@ class CreateCourse extends Component {
             }
         })
     }
+
 // zakon4itj submit
     submit = () => {
         const { context } = this.props;
@@ -113,6 +116,7 @@ class CreateCourse extends Component {
             userId: context.authenticatedUser.id
         };
         console.log(course);
+        //sends a POST request to the REST API's /api/courses route.
         context.data.createCourse(course, emailAddress, password)
             .then(errors => {
                 console.log(errors);
@@ -128,6 +132,7 @@ class CreateCourse extends Component {
             })
     }
 
+    //returns the user to the default route
     cancel = () => {
         this.props.history.push('/');
     }

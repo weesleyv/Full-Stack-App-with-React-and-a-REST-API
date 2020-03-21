@@ -2,6 +2,8 @@ import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import Markdown from 'react-markdown';
 
+// This component provides the "Course Detail" screen by retrieving the detail for a course
+// from the REST API's /api/courses/:id route and rendering the course.
 class CourseDetail extends Component {
 
     state = {
@@ -35,6 +37,7 @@ class CourseDetail extends Component {
                 <div className="actions--bar">
                     <div className="bounds">
                         <div className="grid-100">
+                            {/* {if course created by user, display "delete" and update buttons, else hide} */}
                             {
                                 user && user.id === course.userId ? (
                                     <React.Fragment>
