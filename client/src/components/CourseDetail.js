@@ -11,26 +11,42 @@ class CourseDetail extends Component {
     componentDidMount() {
         fetch(`http://localhost:5000/api/courses/${this.props.match.params.id}`)
             .then(response => response.json())
-            .then(data => this.setState( {course: data} ))
+            .then(data => {
+                if (data.message) {
+                    this.props.history.push('/notfound')
+                } else {
+                    this.setState( {course: data} )
+                }
+            })
             .catch( error => {
-                console.log(error);
+                console.log('fetch:', error);
                 this.props.history.push('/error')
             })
     }
 
     render() {
         const { course } = this.state;
-        const userName = course.User ? `${course.User.firstName} ${course.User.lastName}` : null;
+        const { context } = this.props;
+        const user = context.authenticatedUser;
+        const userName = user ? `${user.firstName} ${user.lastName}` : null;
         
         return(
             <div>
                 <div className="actions--bar">
                     <div className="bounds">
                         <div className="grid-100">
-                            <span>
-                                <Link className="button" to={`/courses/${course.id}/update`}>Update Course</Link>
-                                <button className="button" onClick={this.handleDelete}>Delete Course</button>
-                            </span>
+                            {
+                                user && user.id === course.userId ? (
+                                    <React.Fragment>
+                                        <span>
+                                            <Link className="button" to={`/courses/${course.id}/update`}>Update Course</Link>
+                                            <button className="button" onClick={this.handleDelete}>Delete Course</button>
+                                        </span>
+                                    </React.Fragment>
+                                )
+                                : 
+                                (<React.Fragment></React.Fragment>)
+                            }
                             <Link className="button button-secondary" to='/'>Return to List</Link>
                         </div>
                     </div>

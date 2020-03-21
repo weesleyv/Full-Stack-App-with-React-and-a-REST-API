@@ -12,7 +12,7 @@ export default class Data {
               },
         }
 
-        if (body != null) {
+        if (body !== null) {
             options.body = JSON.stringify(body)
         }
 
@@ -28,7 +28,7 @@ export default class Data {
         const response = await this.api('/users', 'GET', null, true, {emailAddress, password});
         if (response.status === 200) {
             return response.json().then(user => user)
-        } else if (response.status === 400) {
+        } else if (response.status === 401) {
             return null
         } else {
             throw new Error()
@@ -66,6 +66,20 @@ export default class Data {
             response.json().then(data => data)
         } else if (response.status === 401) {
             return null
+        } else {
+            throw new Error()
+        }
+    }
+
+    async updateCourse(course, emailAddress, password) {
+        const response = await this.api(`/courses/${course.id}`, 'PUT', course, true, {emailAddress, password});
+        if (response.status === 204) {
+            return []
+        } else if (response.status === 400) {
+            return response.json().then(error => {
+                console.log(error);
+                return error
+            })
         } else {
             throw new Error()
         }

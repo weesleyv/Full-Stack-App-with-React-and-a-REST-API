@@ -80,20 +80,14 @@ router.put(
       const user = req.currentUser;
       const course = await Course.findByPk(req.params.id);
       if (user.id === course.userId) {
-        if (req.body.title && req.body.description) {
           await course.update(req.body);
           res.status(204).end();
-        } else {
-          res
-            .status(400)
-            .json({ message: "title is required,  description is required" });
-        }
       } else {
         res.status(403).json({ message: "You don't have permissions" });
       }
     } catch (error) {
       if (error.name === "SequelizeValidationError") {
-        const errMSg = error.errors.map(error => error.message);
+        const errMsg = error.errors.map(error => error.message);
         res.status(400).json(errMsg);
       }
     }

@@ -64,9 +64,10 @@ class UserSignIn extends Component {
         console.log('submited');
         const { context } = this.props;
         const { emailAddress, password } = this.state;
-
+        console.log(emailAddress, password);
         context.actions.signIn(emailAddress, password)
             .then( user => {
+                console.log(user);
                 if (user === null) {
                     this.setState(() => {
                         return { errors: ["Sign in was unsuccessful"]};

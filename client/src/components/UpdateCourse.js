@@ -13,8 +13,31 @@ class UpdateCourse extends Component {
         errors: []
     }
 
+    componentDidMount() {
+        fetch(`http://localhost:5000/api/courses/${this.props.match.params.id}`)
+            .then(response => response.json())
+            .then(course => {
+                if (course.message) {
+                    this.props.history.push('/notfound')
+                } else {
+                    this.setState({
+                        id: course.id,
+                        title: course.title,
+                        description: course.description,
+                        estimatedTime: course.estimatedTime,
+                        materialsNeeded: course.materialsNeeded,
+                        userId: course.userId
+                    })
+                }
+            })
+
+    }
+
     render(){
         const { title, description, estimatedTime, materialsNeeded, errors} = this.state;
+        const { context } = this.props;
+        const user = context.authenticatedUser;
+        const userName = user ? `${user.firstName} ${user.lastName}` : null;
         return(
             <div className="bounds course--detail">
                 <h1>Update Course</h1>
@@ -37,9 +60,9 @@ class UpdateCourse extends Component {
                                             value={title}
                                             onChange={this.change}
                                             className="input-title course--title--input" 
-                                            placeholder="Course title..." />
+                                            placeholder="Title" />
                                         </div>
-                                        <p>By Joe Smith</p>
+                                        <p>By {userName}</p>
                                     </div>
                                     <div className="course--description">
                                         <div>
@@ -107,7 +130,32 @@ class UpdateCourse extends Component {
     }
 
     submit = () => {
+        const { context } = this.props;
+        const { id, userId, title, description, materialsNeeded, estimatedTime} = this.state;
+        const updatedCourse = {
+            id,
+            userId,
+            title,
+            description,
+            materialsNeeded,
+            estimatedTime
+        };
+        const emailAddress = context.authenticatedUser.emailAddress;
+        const password = context.authenticatedUser.password;
 
+        context.data.updateCourse(updatedCourse, emailAddress, password)
+            .then( errors => {
+                if (errors.length) {
+                    this.setState({errors})
+                } else {
+                    console.log(`Course "${updatedCourse.title}" has been updated!`);
+                    this.props.history.push(`/courses/${updatedCourse.id}`)
+                }
+            })
+            .catch( error => {
+                console.log(error);
+                this.props.history.push('/error');
+            })
     }
     cancel = () => {
         this.props.history.push(`/courses/${this.props.match.params.id}`)
