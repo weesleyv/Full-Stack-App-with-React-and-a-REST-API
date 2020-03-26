@@ -9,7 +9,8 @@
   },
   "scripts": {
     "start": "nodemon ./app.js",
-    "seed": "cross-env DB_ENABLE_LOGGING=true node './seed'"
+    "seed": "cross-env DB_ENABLE_LOGGING=true node './seed'",
+    "heroku-postbuild": "NPM_CONFIG_PRODUCTION=false npm install --prefix client && npm run build --prefix client"
   },
   "keywords": [],
   "author": "",
