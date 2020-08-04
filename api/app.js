@@ -1,4 +1,5 @@
 "use strict";
+const path = require('path');
 const cors = require('cors');
 
 // load modules
@@ -11,6 +12,7 @@ const users = require("./routes/user");
 const courses = require("./routes/courses");
 
 const sequelize = require("./models").sequelize;
+const { db } = require("./models")
 
 //testing db connection
 sequelize
@@ -45,11 +47,11 @@ app.use("/api", courses);
 if ( process.env.NODE_ENV === "production") {
 
   //set static folder
-  app.use(express.static("client/build"));
+  app.use(express.static(path.join(__dirname, "../client/build")));
   
   //index.html for all page routes
-  app.get("*", (req, res) => {
-    res.sendFile(path.resolve(__dirname, "..client", "build", "index.html"));
+  app.use((req, res) => {
+    res.sendFile(path.join(__dirname, "../client/build/index.html"));
   })
 }
 
@@ -82,7 +84,9 @@ app.use((err, req, res, next) => {
 // set our port
 app.set("port", process.env.PORT || 5000);
 
-// start listening on our port
-const server = app.listen(app.get("port"), () => {
-  console.log(`Express server is listening on port ${server.address().port}`);
-});
+sequelize.sync().then((x) => {
+  const server = app.listen(app.get("port"), () => {
+    console.log(`Express server is listening on port ${server.address().port}`);
+  });
+})
+

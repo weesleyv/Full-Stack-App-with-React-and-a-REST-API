@@ -69,7 +69,7 @@ module.exports = (sequelize, DataTypes) => {
     }
   );
   User.associate = function(models) {
-    User.hasMany(models.Course, { foreignKey: "userId" });
+    User.hasMany(models.Course, { foreignKey: "userId", onDelete: "CASCADE" });
   };
   return User;
 };

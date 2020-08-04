@@ -1,14 +1,17 @@
 {
   "development": {
-    "dialect": "sqlite",
-    "storage": "./fsjstd-restapi.db"
+      "username": "postgres",
+      "password": "Mangali42",
+      "database": "users-db",
+      "port": "5434",
+      "dialect": "postgres"
   },
   "test": {
     "dialect": "sqlite",
     "storage": "./fsjstd-restapi.db"
   },
   "production": {
-    "dialect": "sqlite",
-    "storage": "./fsjstd-restapi.db"
+    "url": "process.env.DATABASE_URL",
+    "dialect": "postgres"
   }
 }
