@@ -21,7 +21,7 @@
         "react-router": "^5.2.0",
         "react-router-dom": "^5.2.0",
         "react-scripts": "^3.4.1",
-        "sequelize": "^6.3.4"
+        "sequelize": "^5.21.4"
     },
     "engines": {
         "node": "12.18.0",
