@@ -1,3 +1,3 @@
 export default {
-    apiUrl: 'http://localhost:5000/api'
+    apiUrl: 'host=rest-react-2020.herokuapp.com'
 }
