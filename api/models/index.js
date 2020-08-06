@@ -9,7 +9,7 @@ const config = require(__dirname + '/../config/config.json')[env];
 const db = {};
 
 let sequelize;
-console.log('Match', process.env.DATABASE_URL.match(/postgres:\/\/([^:]+):([^@]+)@([^:]+):(\d+)\/(.+)/));
+
 if (process.env.HEROKU_POSTGRESQL_BLUE_URL) {
   // the application is executed on Heroku ... use the postgres database
   sequelize = new Sequelize(process.env.HEROKU_POSTGRESQL_BLUE_URL, {
