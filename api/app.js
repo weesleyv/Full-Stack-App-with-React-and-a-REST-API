@@ -12,7 +12,6 @@ const users = require("./routes/user");
 const courses = require("./routes/courses");
 
 const sequelize = require("./models").sequelize;
-const { db } = require("./models")
 
 //testing db connection
 sequelize
