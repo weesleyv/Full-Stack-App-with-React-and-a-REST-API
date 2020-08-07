@@ -5,7 +5,7 @@ export default class Data {
     // @path - api endpoint, @method - http method
     api(path, method = 'GET', body = null, requiredAuth = false, credentials = null) {
 
-        const url = config.apiUrl + path;
+        const url = path;
 
         const options = {
             method,
