@@ -28,7 +28,7 @@ export default class Data {
 
     //sends a GET request to the REST API's /api/users route
     async getUser(emailAddress, password) {
-        const response = await this.api('/users', 'GET', null, true, {emailAddress, password});
+        const response = await this.api('/api/users', 'GET', null, true, {emailAddress, password});
         if (response.status === 200) {
             return response.json().then(user => user)
         } else if (response.status === 401) {
@@ -40,7 +40,7 @@ export default class Data {
 
     //sends a POST request to the REST API's /api/users route
     async createUser(user) {
-        const response = await this.api('/users', 'POST', user);
+        const response = await this.api('/api/users', 'POST', user);
         if (response.status === 201) {
             return []
         } else if ( response.status === 400 ) {
