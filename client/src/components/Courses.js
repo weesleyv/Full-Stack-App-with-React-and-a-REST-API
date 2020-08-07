@@ -11,7 +11,7 @@ state = {
 
 //retrieving the list of courses from the REST API's /api/courses 
 componentDidMount() {
-    fetch(`http://localhost:5000/api/courses/`)
+    fetch(`/api/courses/`)
             .then(response => response.json())
             .then(data => this.setState( { courses: data } ))
             .catch( error => {
