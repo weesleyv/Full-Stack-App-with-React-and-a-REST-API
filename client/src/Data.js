@@ -1,5 +1,3 @@
-import config from './config';
-
 export default class Data {
     //makes the GET, POST, PUT, DELETE requests to the REST API.
     // @path - api endpoint, @method - http method
@@ -53,7 +51,7 @@ export default class Data {
 
     //sends a POST request to the REST API's /api/courses route
     async createCourse(course, emailAddress, password) {
-        const response = await this.api('/courses', 'POST', course, true, {emailAddress, password});
+        const response = await this.api('/api/courses', 'POST', course, true, {emailAddress, password});
         if (response.status === 201) {
             return []
         } else if (response.status === 400) {
@@ -67,7 +65,7 @@ export default class Data {
     
     //sends a GET request to the REST API's /api/courses/:id route
     async getCourse(id)  {
-        const response = await this.api(`/courses/${id}`, 'GET');
+        const response = await this.api(`/api/courses/${id}`, 'GET');
         if (response.status === 200) {
             response.json().then(data => data)
         } else if (response.status === 401) {
@@ -79,7 +77,7 @@ export default class Data {
 
     //sends a PUT request to the REST API's /api/courses/:id route
     async updateCourse(course, emailAddress, password) {
-        const response = await this.api(`/courses/${course.id}`, 'PUT', course, true, {emailAddress, password});
+        const response = await this.api(`/api/courses/${course.id}`, 'PUT', course, true, {emailAddress, password});
         if (response.status === 204) {
             return []
         } else if (response.status === 400) {
@@ -94,7 +92,7 @@ export default class Data {
 
     //sends a DELETE request to the REST API's /api/courses/:id route
     async deleteCourse(id, emailAddress, password) {
-        const response = await this.api(`/courses/${id}`, 'DELETE', null, true, {emailAddress, password});
+        const response = await this.api(`/api/courses/${id}`, 'DELETE', null, true, {emailAddress, password});
         if (response.status === 204) {
             return []
         } else if (response.status === 401) {
