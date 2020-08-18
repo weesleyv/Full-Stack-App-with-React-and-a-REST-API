@@ -14,7 +14,7 @@ const Form = (props) => {
     }
 
     return(
-        <div>
+        <div className="form">
             <ErrorsDisplay errors={errors} />
             <form onSubmit={handleSubmit}>
                 {elements()}

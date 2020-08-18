@@ -20,7 +20,7 @@ class CreateCourse extends Component {
         const name = `${context.authenticatedUser.firstName} ${context.authenticatedUser.lastName}`;
         return(
             <div className="bounds course--detail">
-                <h1>Create Course</h1>
+                <h1 className="create-course">Create Course</h1>
                 <Form 
                     submit = {this.submit}
                     cancel = {this.cancel}

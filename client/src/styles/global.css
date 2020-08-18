@@ -544,7 +544,7 @@ p {
   font-weight: 100;
   color: #999;
   font-size: 14px;
-  padding: 0 0 10px;
+  /* padding: 0 0 10px; */
   margin-bottom: 10px;
   border-bottom: 1px solid #ddd;
   text-transform: uppercase;
@@ -560,7 +560,7 @@ p {
 }
 /* line 303, ../sass/global.sass */
 .course--stats--list > li {
-  margin-bottom: 50px;
+  margin-bottom: 40px;
 }
 /* line 305, ../sass/global.sass */
 .course--stats--list > li ul {
@@ -689,6 +689,7 @@ input:focus {
   font-weight: bold;
   display: inline-block;
   box-sizing: border-box;
+  text-align: center;
   -webkit-transition: background 0.2s;
   -moz-transition: background 0.2s;
   -ms-transition: background 0.2s;
@@ -751,3 +752,117 @@ input:focus {
 .course--description textarea {
   margin-bottom: 20px;
 }
+
+/* main */
+
+.bounds {
+  display: flex;
+  flex-wrap: wrap;
+  width: 100%;
+  justify-content: space-between;
+  align-items: center;
+  text-overflow: ellipsis;
+}
+
+.course--module {
+  display: flex;
+  flex-wrap: wrap;
+  padding: 1rem;
+  align-items: center;
+}
+
+.course--module > * {
+  flex-basis: 100%;
+  flex-wrap: wrap;
+  text-align: center;
+}
+
+.create-course {
+  width: 100%;
+  padding: 0 1rem;
+}
+
+@media (max-width: 600px) {
+  body, .course--module > * {
+    font-size: 0.8rem;
+  }
+
+  .create-course {
+    font-size: 2rem;
+  }
+  /* courses */
+
+  .grid-100 > * {
+    display: flex;
+    justify-content: space-around;
+    /* margin: 0.5rem; */
+    flex-basis: 100%;
+  }
+  
+  .grid-100 .button-secondary {
+    margin-top: 1rem;
+    text-align: right;
+  }
+
+  .course--detail {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 0;
+  }
+  .grid-right {
+    width: 100%;
+  }
+  .grid-66 {
+    width: 90%;
+  }
+
+  .grid-right {
+    width: 90%;
+    float: initial
+  }
+
+  /* SignUp */
+
+  .grid-33 {
+    width: 100%;
+  }
+
+  .pad-bottom {
+    display: flex;
+    flex-wrap: wrap;
+    text-align: center;
+    width: 94%;
+  }
+
+  .pad-bottom button {
+    /* padding: 1rem 0.5rem 1rem 4rem; */
+    box-sizing: border-box;
+    text-align: center;
+  }
+}
+
+@media (max-width: 300px) {
+  body, .course--module > * , .grid-100 > * {
+    font-size: 0.6rem;
+  }
+
+  .course--module {
+    padding: 0.5rem
+  }
+
+
+  .grid-100 a, .grid-100 button {
+    font-size: 0.9rem;
+  }
+
+  .grid-100 a {
+    text-align: center;
+  }
+
+  .button {
+    text-align: center;
+  }
+}
+
+/* courses */

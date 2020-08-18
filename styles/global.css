@@ -751,3 +751,7 @@ input:focus {
 .course--description textarea {
   margin-bottom: 20px;
 }
+
+.course--module h3 {
+  color: black
+}
